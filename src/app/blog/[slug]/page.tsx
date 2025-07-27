@@ -21,7 +21,7 @@ export async function generateMetadata({
   }
 
   return {
-    title: `${post.title} - Sinclear Blog`,
+    title: `${post.title} - Marc's Blog`,
     description: post.excerpt?.replace(/<[^>]*>/g, "").slice(0, 160) || "",
     openGraph: post.featuredImage?.node?.sourceUrl
       ? {
