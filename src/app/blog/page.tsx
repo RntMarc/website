@@ -4,8 +4,7 @@ import { PostCard } from "@/components/blog/post-card";
 import { Post } from "@/types/types";
 
 export const metadata: Metadata = {
-  title: "Sinclear Blog",
-  description: "Ankündigungen, Berichte und Meinungen von Sinclear.",
+  title: "Marc's Blog",
 };
 
 export default async function BlogPage() {
