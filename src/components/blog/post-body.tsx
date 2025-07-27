@@ -67,9 +67,9 @@ export function PostBody({ post }: PostBodyProps) {
             )}
           </div>
 
-          {categories?.edges.length > 0 && (
+          {categories!.edges.length > 0 && (
             <div className="flex flex-wrap gap-2">
-              {categories.edges.map(({ node }) => (
+              {categories!.edges.map(({ node }) => (
                 <Badge key={node.slug} variant="secondary">
                   {node.name}
                 </Badge>
