@@ -41,8 +41,7 @@ interface PostCardProps {
 }
 
 export function PostCard({ post }: PostCardProps) {
-  const { slug, title, excerpt, date, featuredImage, author, categories } =
-    post;
+  const { slug, title, excerpt, date, featuredImage, author } = post;
 
   return (
     <Link href={`/blog/${slug}`} className="block group">

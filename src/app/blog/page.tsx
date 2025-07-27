@@ -1,7 +1,7 @@
 import type { Metadata } from "next";
 import { getAllPosts } from "@/lib/api";
 import { PostCard } from "@/components/blog/post-card";
-import { Post } from "@/types/post";
+import { Post } from "@/types/types";
 
 export const metadata: Metadata = {
   title: "Sinclear Blog",
@@ -15,7 +15,7 @@ export default async function BlogPage() {
     <div className="container mx-auto px-4 py-12">
       <div className="max-w-5xl mx-auto">
         <header className="mb-12 text-center">
-          <h1 className="text-4xl font-bold mb-4">Marc's Blog</h1>
+          <h1 className="text-4xl font-bold mb-4">Marc&apos;s Blog</h1>
           <p className="text-xl text-muted-foreground">
             Auch im Geminispace unter gemini://marcrnt.cities.yesterweb.org
           </p>

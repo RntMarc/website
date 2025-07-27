@@ -1,16 +1,11 @@
-/**
- * WordPress GraphQL API Client
- */
+import { Post } from "@/types/types";
 
 const API_URL = "https://cms.marcrnt.de/graphql";
 
-/**
- * Sendet eine GraphQL-Anfrage an die WordPress API
- */
-async function fetchAPI(
+async function fetchAPI<TData>(
   query: string,
-  { variables }: { variables?: any } = {}
-) {
+  variables: { [key: string]: unknown } = {}
+): Promise<TData> {
   const headers = { "Content-Type": "application/json" };
 
   const res = await fetch(API_URL, {
@@ -33,11 +28,16 @@ async function fetchAPI(
   return json.data;
 }
 
-/**
- * Holt alle Blog-Posts für die Übersichtsseite
- */
-export async function getAllPosts() {
-  const data = await fetchAPI(`
+export async function getAllPosts(): Promise<Post[]> {
+  type Response = {
+    posts: {
+      edges: {
+        node: Post;
+      }[];
+    };
+  };
+
+  const data = await fetchAPI<Response>(`
     query AllPosts {
       posts(first: 20, where: { orderby: { field: DATE, order: DESC } }) {
         edges {
@@ -75,14 +75,15 @@ export async function getAllPosts() {
     }
   `);
 
-  return data?.posts?.edges.map(({ node }) => node) || [];
+  return data.posts.edges.map(({ node }) => node);
 }
 
-/**
- * Holt einen einzelnen Blog-Post anhand des Slugs
- */
-export async function getPostBySlug(slug: string) {
-  const data = await fetchAPI(
+export async function getPostBySlug(slug: string): Promise<Post | null> {
+  type Response = {
+    post: Post | null;
+  };
+
+  const data = await fetchAPI<Response>(
     `
     query PostBySlug($slug: ID!) {
       post(id: $slug, idType: SLUG) {
@@ -116,21 +117,24 @@ export async function getPostBySlug(slug: string) {
       }
     }
   `,
-    {
-      variables: {
-        slug,
-      },
-    }
+    { slug }
   );
 
-  return data?.post;
+  return data.post;
 }
 
-/**
- * Holt alle Blog-Post-Slugs für die statische Generierung
- */
-export async function getAllPostSlugs() {
-  const data = await fetchAPI(`
+export async function getAllPostSlugs(): Promise<string[]> {
+  type Response = {
+    posts: {
+      edges: {
+        node: {
+          slug: string;
+        };
+      }[];
+    };
+  };
+
+  const data = await fetchAPI<Response>(`
     query AllPostSlugs {
       posts(first: 100) {
         edges {
@@ -142,5 +146,5 @@ export async function getAllPostSlugs() {
     }
   `);
 
-  return data?.posts?.edges.map(({ node }) => node.slug) || [];
+  return data.posts.edges.map(({ node }) => node.slug);
 }
