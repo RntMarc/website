@@ -46,8 +46,8 @@ export async function generateStaticParams() {
   }));
 }
 
-export default async function BlogPostPage({ params }: BlogPostPageProps) {
-  const post = await getPostBySlug(params.slug);
+export default async function BlogPostPage(props: BlogPostPageProps) {
+  const post = await getPostBySlug(props.params.slug);
 
   if (!post) {
     notFound();
