@@ -1,15 +1,16 @@
 import Link from "next/link";
 import Image from "next/image";
 
+// current year
+const year = new Date().getFullYear();
+
 export function Footer() {
   return (
     <footer className="bg-muted/50 border-t">
       <div className="container mx-auto px-4 py-8">
         <div className="grid grid-cols-1 md:grid-cols-2 gap-8">
           <div className="text-left">
-            <p className="text-sm text-muted-foreground">
-              © Sinclear 2025. Mehr als nur Zinnchlorid.
-            </p>
+            <p className="text-sm text-muted-foreground">© MarcRnt {year}</p>
           </div>
           <div className="flex justify-start md:justify-end space-x-4">
             <Link
