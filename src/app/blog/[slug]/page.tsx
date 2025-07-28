@@ -4,15 +4,16 @@ import { getAllPostSlugs, getPostBySlug } from "@/lib/api";
 import { PostBody } from "@/components/blog/post-body";
 
 interface BlogPostPageProps {
-  params: {
+  params: Promise<{
     slug: string;
-  };
+  }>;
 }
 
 export async function generateMetadata({
   params,
 }: BlogPostPageProps): Promise<Metadata> {
-  const post = await getPostBySlug(params.slug);
+  const { slug } = await params;
+  const post = await getPostBySlug(slug);
 
   if (!post) {
     return {
@@ -41,17 +42,14 @@ export async function generateMetadata({
 export async function generateStaticParams() {
   const slugs = await getAllPostSlugs();
 
-  return slugs.map((slug: string) => ({
+  return slugs.map((slug) => ({
     slug,
   }));
 }
 
-export default async function BlogPostPage({
-  params,
-}: {
-  params: { slug: string };
-}) {
-  const post = await getPostBySlug(params.slug);
+export default async function BlogPostPage({ params }: BlogPostPageProps) {
+  const { slug } = await params;
+  const post = await getPostBySlug(slug);
 
   if (!post) {
     notFound();
