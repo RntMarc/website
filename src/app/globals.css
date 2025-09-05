@@ -108,11 +108,48 @@
   --sidebar-border: oklch(1 0 0 / 10%);
   --sidebar-ring: oklch(0.556 0 0);
 }
+
 @layer base {
   * {
     @apply border-border outline-ring/50;
   }
+
   body {
     @apply bg-background text-foreground;
+  }
+
+  .prose {
+    color: var(--foreground);
+  }
+
+  .prose p {
+    @apply text-muted-foreground;
+  }
+
+  .prose h1,
+  .prose h2,
+  .prose h3,
+  .prose h4 {
+    @apply text-foreground;
+  }
+
+  .prose strong {
+    @apply text-accent-foreground;
+  }
+
+  .prose a {
+    @apply text-primary underline;
+  }
+
+  .prose blockquote {
+    @apply text-muted-foreground border-l-4 pl-4;
+  }
+
+  .prose code {
+    @apply text-secondary-foreground;
+  }
+
+  .dark .prose {
+    color: var(--foreground); /* im Dark Mode erzwingen */
   }
 }
