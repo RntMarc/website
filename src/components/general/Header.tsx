@@ -32,16 +32,16 @@ const navigation = [
     ],
   },
   {
-    name: "Bilder",
+    name: "Fotos",
     href: "/pics",
     submenu: [
       { name: "Pixelfed", href: "https://pixelfed.social/@MarcRnt" },
-      { name: "Unsplash", href: "" },
-      { name: "Pexels", href: "" },
-      { name: "Pixabay", href: "" },
-      { name: "EyeEm", href: "" },
-      { name: "DeviantArt", href: "" },
-      { name: "Tumblr", href: "" },
+      { name: "Unsplash", href: "https://unsplash.com/de/@marcrnt" },
+      { name: "Pexels", href: "https://pexels.com/de-de/@marcrnt" },
+      { name: "Pixabay", href: "https://pixabay.com/users/marcrnt-11253928" },
+      { name: "EyeEm", href: "https://www.eyeem.com/u/marcrnt" },
+      { name: "DeviantArt", href: "https://www.deviantart.com/marcrnt" },
+      { name: "Tumblr", href: "https://www.tumblr.com/marcrnt" },
     ],
   },
 ];
@@ -61,6 +61,8 @@ export function Header() {
               <Image
                 src={"/marc.png"}
                 alt={"Marc"}
+                width={40}
+                height={40}
                 className="w-10 h-10 rounded-lg flex justify-center"
               />
             </div>
