@@ -42,6 +42,7 @@ const navigation = [
       { name: "EyeEm", href: "https://www.eyeem.com/u/marcrnt" },
       { name: "DeviantArt", href: "https://www.deviantart.com/marcrnt" },
       { name: "Tumblr", href: "https://www.tumblr.com/marcrnt" },
+      { name: "Cara", href: "https://cara.app/marcrnt" },
     ],
   },
 ];
