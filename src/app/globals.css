@@ -1,3 +1,4 @@
+@plugin "@tailwindcss/typography";
 @import "tailwindcss";
 @import "tw-animate-css";
 
@@ -113,9 +114,7 @@
 }
 
 @layer base {
-  * {
-    @apply border-border outline-ring/50;
-  }
+  /* Kein globaler Universal-Reset mehr, damit Typography wirken kann */
   body {
     @apply bg-background text-foreground;
   }

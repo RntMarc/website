@@ -36,6 +36,11 @@ interface PostBodyProps {
 export function PostBody({ post }: PostBodyProps) {
   const { title, content, date, featuredImage, author, categories } = post;
 
+  // Debug-Ausgabe im Devtools-Log
+  if (typeof window !== "undefined") {
+    console.log("Raw post.content HTML:", content);
+  }
+
   return (
     <article className="max-w-3xl mx-auto">
       <header className="mb-8">
@@ -92,6 +97,15 @@ export function PostBody({ post }: PostBodyProps) {
         )}
       </header>
 
+      {/* Debug-Box mit Raw-HTML als Text */}
+      {/* <details className="mb-8 border rounded p-4 bg-muted">
+        <summary className="cursor-pointer">Debug: Raw post.content</summary>
+        <pre className="whitespace-pre-wrap text-sm overflow-x-auto">
+          {content}
+        </pre>
+      </details> */}
+
+      {/* Gerendertes HTML mit Tailwind Typography */}
       <div
         className="prose prose-lg dark:prose-invert max-w-none"
         dangerouslySetInnerHTML={{ __html: content }}
