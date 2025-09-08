@@ -1,11 +1,24 @@
 import fs from "fs";
 import path from "path";
 import pdfMake from "pdfmake/build/pdfmake";
-import { buildLeftContent, buildSteps } from "./recipe-latex";
+import type { TDocumentDefinitions, Content } from "pdfmake/interfaces";
 
-// PDFMake benötigt vfs: wir laden die TTF-Dateien
+// Interfaces
+interface Category {
+  name: string;
+  items: string[];
+}
+
+interface GeneratePdfOptions {
+  title: string;
+  timeblock: string;
+  categories: Category[];
+  steps: string[];
+  imageBase64?: string;
+}
+
+// Fonts laden
 const fontDir = path.join(process.cwd(), "public/fonts");
-
 const InterNormal = fs
   .readFileSync(path.join(fontDir, "Inter-VariableFont.ttf"))
   .toString("base64");
@@ -13,13 +26,11 @@ const InterItalic = fs
   .readFileSync(path.join(fontDir, "Inter-Italic-VariableFont.ttf"))
   .toString("base64");
 
-// Virtual File System für pdfMake
-(pdfMake as any).vfs = {
+(pdfMake as unknown as { vfs: Record<string, string> }).vfs = {
   "Inter-VariableFont.ttf": InterNormal,
   "Inter-Italic-VariableFont.ttf": InterItalic,
 };
 
-// Fonts definieren
 export const fonts = {
   Inter: {
     normal: "Inter-VariableFont.ttf",
@@ -29,23 +40,12 @@ export const fonts = {
   },
 };
 
-export async function generatePdfBuffer({
-  title,
-  timeblock,
-  categories,
-  steps,
-  imageBase64,
-}: {
-  title: string;
-  timeblock: string;
-  categories: { name: string; items: string[] }[];
-  steps: string[];
-  imageBase64?: string;
-}): Promise<Buffer> {
-  const leftContent = buildLeftContent(categories);
-  const stepsTex = buildSteps(steps);
+export async function generatePdfBuffer(
+  options: GeneratePdfOptions
+): Promise<Buffer> {
+  const { title, timeblock, categories, steps, imageBase64 } = options;
 
-  const docDefinition: any = {
+  const docDefinition: TDocumentDefinitions = {
     defaultStyle: { font: "Inter" },
     content: [
       {
@@ -88,11 +88,11 @@ export async function generatePdfBuffer({
           },
         ],
       },
-    ],
+    ] as Content[],
   };
 
   if (imageBase64) {
-    docDefinition.content.push({
+    (docDefinition.content as Content[]).push({
       image: imageBase64,
       width: 250,
       alignment: "center",
@@ -101,10 +101,8 @@ export async function generatePdfBuffer({
   }
 
   return new Promise((resolve) => {
-    pdfMake
-      .createPdf(docDefinition, {}, fonts)
-      .getBuffer((buffer: Uint8Array) => {
-        resolve(Buffer.from(buffer));
-      });
+    pdfMake.createPdf(docDefinition).getBuffer((buffer: Uint8Array) => {
+      resolve(Buffer.from(buffer));
+    });
   });
 }
