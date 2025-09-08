@@ -1,0 +1,37 @@
+\documentclass[12pt,a4paper]{article}
+\usepackage[utf8]{inputenc}
+\usepackage[T1]{fontenc}
+\usepackage{helvet}\renewcommand{\familydefault}{\sfdefault}
+\usepackage[left=3cm,right=1.5cm,top=2cm,bottom=2cm]{geometry}
+\usepackage{paracol}\setlength{\columnsep}{1.25cm}\columnratio{0.3062295,0.6937705}
+\usepackage{enumitem}\usepackage{xcolor}\usepackage{setspace}\usepackage{pifont}
+\setlength{\parindent}{0pt}
+\sloppy\emergencystretch=1em
+
+\newcommand{\RecipeTitle}[1]{{\fontsize{25pt}{25pt}\selectfont #1\par\vspace{0.14cm}}}
+\newcommand{\IngredientCategory}[1]{\vspace{0.45cm}{\fontsize{14pt}{16.1pt}\selectfont\bfseries\textcolor[HTML]{2E75B5}{#1}\par\vspace{0.35cm}}}
+\newcommand{\Ingredient}[1]{{\fontsize{11pt}{12.65pt}\selectfont\bfseries #1\par\vspace{0.35cm}}}
+\newcommand{\TimeBlock}[1]{{\fontsize{11pt}{11pt}\selectfont \ding{72}\ #1\par\vspace{0.75cm}}}
+
+\newlist{recipesteps}{enumerate}{1}
+\setlist[recipesteps]{label*=\arabic*., left=3.1pt, labelsep=18.2pt, labelwidth=18.2pt, listparindent=0pt, itemsep=0.35cm, parsep=0pt, topsep=0pt, font=\fontsize{11pt}{12.65pt}\selectfont}
+
+\begin{document}
+\RecipeTitle{%%TITLE%%}
+\vspace{0.2cm}
+\begin{paracol}{2}
+\begin{leftcolumn}
+\TimeBlock{%%TIMEBLOCK%%}
+
+%%LEFT_CONTENT%%
+\end{leftcolumn}
+\begin{rightcolumn}
+\begin{recipesteps}
+%%STEPS%%
+\end{recipesteps}
+
+\vspace{1em}
+%%IMAGEBOX%%
+\end{rightcolumn}
+\end{paracol}
+\end{document}
